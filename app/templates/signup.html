@@ -1,6 +1,7 @@
 {% block content %}
     <h>Please Sign Up</h>
     <form action="" method="post">
+        {{ form.hidden_tag() }}
         <p>
             {{ form.name.label }}
             {{ form.name(size=64) }}
