@@ -1,0 +1,19 @@
+{% block content %}
+    <h>Please Sign Up</h>
+    <form action="" method="post">
+        <p>
+            {{ form.name.label }}
+            {{ form.name(size=64) }}
+        </p>
+        <p>
+            {{ form.email.label }}
+            {{ form.email(size=64) }}
+        <p>
+        <p>
+            {{ form.password.label }}
+            {{ form.password(size=64) }}
+        <p>
+        <p>
+            {{ form.submit() }}
+        </p>
+{% endblock %}
