@@ -1,7 +1,7 @@
 import sqlite3
 from flask import render_template, url_for, redirect
 from flask_login import current_user, login_user, login_required, logout_user
-from app import app, login_manager
+from app import app, login_manager, bcrypt
 from app.forms import SignUpForm, LoginForm
 from app.sql import preparedSignUp, preparedLogin, preparedUserInfo
 from app.models import User
@@ -26,7 +26,8 @@ def signup():
         result = cur.fetchone()
         if result is not None:
             return render_template('signup.html', form=form)
-        newUserInfo = (form.name.data, form.email.data, form.password.data, 5000)
+        pw_hash = bcrypt.generate_password_hash(form.password.data)
+        newUserInfo = (form.name.data, form.email.data, pw_hash, 5000)
         cur.execute(preparedSignUp, newUserInfo)
         conn.commit()
         return redirect(url_for('blank'))
@@ -41,7 +42,7 @@ def login():
         if not result:
             return redirect(url_for('blank'))
         user = User(result)
-        if form.password.data == user.password:
+        if bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('secure'))
         return redirect(url_for('blank'))

@@ -1,5 +1,6 @@
 import sqlite3
 
+from app import bcrypt
 from app.sql import preparedSignUp, preparedStock, preparedTransactionLog
 
 conn = sqlite3.connect("database.sqlite", check_same_thread=False)
@@ -10,9 +11,9 @@ conn.commit()
 cur.execute("DELETE FROM stock_transactions")
 conn.commit()
 
-cur.execute(preparedSignUp, ("mike", "youtube.com", "hi", 5000))
+cur.execute(preparedSignUp, ("mike", "youtube.com", bcrypt.generate_password_hash("hi"), 5000))
 conn.commit()
-cur.execute(preparedSignUp, ("bill", "google.com", "there", 5000))
+cur.execute(preparedSignUp, ("bill", "google.com", bcrypt.generate_password_hash("there"), 5000))
 conn.commit()
 
 cur.execute(preparedStock, ("youtube.com", "YOU", 20.3, 2))
