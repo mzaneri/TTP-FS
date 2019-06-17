@@ -1,14 +1,14 @@
 from app import bcrypt, conn, cur
-from app.sql import preparedSignUp, preparedStock, preparedTransactionLog
+from app.sql import preparedRegister, preparedStock, preparedTransactionLog
 
 cur.execute("DELETE FROM users")
 conn.commit()
 cur.execute("DELETE FROM stock_transactions")
 conn.commit()
 
-cur.execute(preparedSignUp, ("mike", "youtube.com", bcrypt.generate_password_hash("hi"), 5000))
+cur.execute(preparedRegister, ("mike", "youtube.com", bcrypt.generate_password_hash("hi"), 5000))
 conn.commit()
-cur.execute(preparedSignUp, ("bill", "google.com", bcrypt.generate_password_hash("there"), 5000))
+cur.execute(preparedRegister, ("bill", "google.com", bcrypt.generate_password_hash("there"), 5000))
 conn.commit()
 
 cur.execute(preparedStock, ("youtube.com", "YOU", 20.3, 2))
