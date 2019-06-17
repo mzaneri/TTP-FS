@@ -1,0 +1,10 @@
+{% block content %}
+<h>Transactions</h>
+
+<p>
+    {% for transaction in completed %}
+    <div> Ticker : {{transaction[2]}} | Price : {{transaction[3]}} | Quantity : {{transaction[4]}} </div>
+    {% endfor %}
+</p>
+
+{% endblock %}

@@ -1,5 +1,15 @@
 {% block content %}
-    <h>Portfolio</h>
+<h>Portfolio</h>
+
+
+    <div><p> Current Balance : {{balance}} </p></div>
+
+    {% for transaction in completed %}
+    <div><p> Ticker : {{transaction[0]}} </p></div>
+    <div><p> Quantity : {{transaction[1]}} </p></div>
+    {% endfor %}
+
+
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
@@ -13,4 +23,5 @@
         <p>
             {{ form.submit() }}
         </p>
+   </form>
 {% endblock %}
