@@ -14,11 +14,12 @@ userTable = """CREATE TABLE IF NOT EXISTS "users" (
 	"name"	TEXT NOT NULL,
 	"email"	TEXT NOT NULL,
 	"password"	TEXT NOT NULL,
+    "balance" REAL,
 	PRIMARY KEY("ID")
 );"""
 
-preparedSignUp = """INSERT into users (name, email, password)
-VALUES (?, ?, ?)"""
+preparedSignUp = """INSERT into users (name, email, password, balance)
+VALUES (?, ?, ?, ?)"""
 
 preparedStock = """INSERT into stock_transactions (email, stock_ticker, price, quantity)
 VALUES (?, ?, ?, ?)"""
@@ -34,7 +35,7 @@ HAVING sum(quantity)>0
 ORDER BY stock_ticker;
 """
 
-conn = sqlite3.connect("database.sqlite")
+conn = sqlite3.connect("database.sqlite", check_same_thread=False)
 cursor = conn.cursor()
 cursor.execute(stockTable)
 cursor.execute(userTable)

@@ -19,7 +19,7 @@ def signup():
         result = cur.fetchone()
         if result is not None:
             return render_template('signup.html', form=form)
-        newUserInfo = (form.name.data, form.email.data, form.password.data)
+        newUserInfo = (form.name.data, form.email.data, form.password.data, 5000)
         cur.execute(preparedSignUp, newUserInfo)
         conn.commit()
         return redirect(url_for('blank'))

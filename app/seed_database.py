@@ -10,9 +10,9 @@ conn.commit()
 cur.execute("DELETE FROM stock_transactions")
 conn.commit()
 
-cur.execute(preparedSignUp, ("mike", "youtube.com", "hi"))
+cur.execute(preparedSignUp, ("mike", "youtube.com", "hi", 5000))
 conn.commit()
-cur.execute(preparedSignUp, ("bill", "google.com", "there"))
+cur.execute(preparedSignUp, ("bill", "google.com", "there", 5000))
 conn.commit()
 
 cur.execute(preparedStock, ("youtube.com", "YOU", 20.3, 2))
