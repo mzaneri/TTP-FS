@@ -1,6 +1,6 @@
 import sqlite3
 
-stockTable = """CREATE TABLE "stock_transactions" (
+stockTable = """CREATE TABLE IF NOT EXISTS "stock_transactions" (
 	"ID"	INTEGER NOT NULL,
 	"email"	TEXT NOT NULL,
 	"stock_ticker"	TEXT NOT NULL,
@@ -9,7 +9,7 @@ stockTable = """CREATE TABLE "stock_transactions" (
 	PRIMARY KEY("ID")
 );"""
 
-userTable = """CREATE TABLE "users" (
+userTable = """CREATE TABLE IF NOT EXISTS "users" (
 	"ID"	INTEGER NOT NULL,
 	"name"	TEXT NOT NULL,
 	"email"	TEXT NOT NULL,
@@ -25,12 +25,16 @@ VALUES (?, ?, ?, ?)"""
 
 preparedLogin = "SELECT password FROM users WHERE email=?"
 
+preparedTransactionLog = """
+SELECT stock_ticker, sum(quantity)
+FROM stock_transactions
+WHERE email=?
+GROUP BY stock_ticker
+HAVING sum(quantity)>0
+ORDER BY stock_ticker;
+"""
+
 conn = sqlite3.connect("database.sqlite")
 cursor = conn.cursor()
 cursor.execute(stockTable)
 cursor.execute(userTable)
-print("hi")
-cursor.execute(preparedSignUp, ("mike", "youtube.com", "hi"))
-conn.commit()
-cursor.execute(preparedStock, ("youtube.com", "YOU", 20.3, 2))
-conn.commit()
