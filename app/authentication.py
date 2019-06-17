@@ -2,7 +2,7 @@ from flask import render_template, url_for, redirect
 from flask_login import current_user, login_user, login_required, logout_user
 from app import app, login_manager, bcrypt, conn, cur
 from app.forms import RegisterForm, SignInForm
-from app.sql import preparedRegister, preparedSignIn, preparedUserInfo
+from app.sql import preparedRegister, preparedUserInfo
 from app.models import User
 
 @login_manager.user_loader

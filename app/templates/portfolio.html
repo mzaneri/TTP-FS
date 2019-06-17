@@ -1,0 +1,16 @@
+{% block content %}
+    <h>Portfolio</h>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.ticker.label }}
+            {{ form.ticker(size=8) }}
+        <p>
+        <p>
+            {{ form.quantity.label }}
+            {{ form.quantity(size=8) }}
+        <p>
+        <p>
+            {{ form.submit() }}
+        </p>
+{% endblock %}

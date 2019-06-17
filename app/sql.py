@@ -24,8 +24,6 @@ VALUES (?, ?, ?, ?)"""
 preparedStock = """INSERT into stock_transactions (email, stock_ticker, price, quantity)
 VALUES (?, ?, ?, ?)"""
 
-preparedSignIn = "SELECT password FROM users WHERE email=?"
-
 preparedCurrentPortfolio = """
 SELECT stock_ticker, sum(quantity)
 FROM stock_transactions
@@ -35,9 +33,17 @@ HAVING sum(quantity)>0
 ORDER BY stock_ticker;
 """
 
+preparedCurrentStock = """
+SELECT sum(quantity)
+FROM stock_transactions
+WHERE email=? AND stock_ticker=?;
+"""
+
 preparedTransactionLog = "SELECT * from stock_transactions WHERE email=?"
 
-preparedUserInfo = " SELECT * FROM users WHERE email=?"
+preparedUserInfo = "SELECT * FROM users WHERE email=?"
+
+preparedChangeBalance = "UPDATE users SET balance=? WHERE email=?"
 
 cur.execute(stockTable)
 cur.execute(userTable)
