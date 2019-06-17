@@ -1,0 +1,16 @@
+{% block content %}
+    <h>Please Login</h>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}
+            {{ form.email(size=64) }}
+        <p>
+        <p>
+            {{ form.password.label }}
+            {{ form.password(size=64) }}
+        <p>
+        <p>
+            {{ form.submit() }}
+        </p>
+{% endblock %}

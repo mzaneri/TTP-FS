@@ -35,6 +35,8 @@ HAVING sum(quantity)>0
 ORDER BY stock_ticker;
 """
 
+preparedUserInfo = " SELECT * FROM users WHERE email=?"
+
 conn = sqlite3.connect("database.sqlite", check_same_thread=False)
 cursor = conn.cursor()
 cursor.execute(stockTable)
