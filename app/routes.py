@@ -43,10 +43,15 @@ def login():
         user = User(result)
         if form.password.data == user.password:
             login_user(user)
-            print('logged in')
             return redirect(url_for('secure'))
         return redirect(url_for('blank'))
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('blank'))
 
 @app.route('/secure')
 @login_required
