@@ -1,10 +1,5 @@
-import sqlite3
-
-from app import bcrypt
+from app import bcrypt, conn, cur
 from app.sql import preparedSignUp, preparedStock, preparedTransactionLog
-
-conn = sqlite3.connect("database.sqlite", check_same_thread=False)
-cur = conn.cursor()
 
 cur.execute("DELETE FROM users")
 conn.commit()
@@ -31,5 +26,3 @@ conn.commit()
 # cur.execute(preparedTransactionLog, ("google.com", ))
 # result = cur.fetchone()
 # print(result)
-
-conn.close()

@@ -1,4 +1,4 @@
-import sqlite3
+from app import conn, cur
 
 stockTable = """CREATE TABLE IF NOT EXISTS "stock_transactions" (
 	"ID"	INTEGER NOT NULL,
@@ -37,9 +37,5 @@ ORDER BY stock_ticker;
 
 preparedUserInfo = " SELECT * FROM users WHERE email=?"
 
-conn = sqlite3.connect("database.sqlite", check_same_thread=False)
-cursor = conn.cursor()
-cursor.execute(stockTable)
-cursor.execute(userTable)
-
-conn.close()
+cur.execute(stockTable)
+cur.execute(userTable)
