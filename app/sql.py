@@ -38,3 +38,5 @@ conn = sqlite3.connect("database.sqlite")
 cursor = conn.cursor()
 cursor.execute(stockTable)
 cursor.execute(userTable)
+
+conn.close()
