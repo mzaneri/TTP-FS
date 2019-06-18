@@ -10,7 +10,7 @@ import requests
 @app.route('/secure')
 @login_required
 def secure():
-    return "Hi and Welcome to secure place"
+    return render_template("secure.html")
 
 @app.route('/transactions', methods=["GET"])
 @login_required

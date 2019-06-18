@@ -26,7 +26,7 @@ def register():
         newUserInfo = (form.name.data, form.email.data, pw_hash, 5000)
         cur.execute(preparedRegister, newUserInfo)
         conn.commit()
-        return redirect(url_for('blank'))
+        return redirect(url_for('index'))
     return render_template('register.html', form=form)
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -36,20 +36,20 @@ def signin():
         cur.execute(preparedUserInfo, (form.email.data,))
         result = cur.fetchone()
         if not result:
-            return redirect(url_for('blank'))
+            return redirect(url_for('index'))
         user = User(result)
         if bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('secure'))
-        return redirect(url_for('blank'))
+        return redirect(url_for('index'))
     return render_template('signin.html', form=form)
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('blank'))
+    return redirect(url_for('index'))
 
 @app.route('/')
-def blank():
-    return "Starting Page"
+def index():
+    return render_template('index.html')
