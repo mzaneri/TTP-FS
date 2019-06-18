@@ -24,7 +24,7 @@ def transactions():
 def portfolio():
     form = StockForm()
     cur.execute(preparedCurrentPortfolio, (current_user.email,))
-    completed = cur.fetchall()
+    all_transactions = cur.fetchall()
     balance = current_user.balance
     if form.validate_on_submit():
         ticker = form.ticker.data.lower()
@@ -34,9 +34,9 @@ def portfolio():
             flash("That ticker does not exist")
             return redirect(url_for("portfolio"))
         price = r.json()['quote']['latestPrice']
-        print(form.quantity.data)
         quantity = int(form.quantity.data)
         transaction_cost = quantity * price
+        new_balance = current_user.balance - transaction_cost
         if quantity < 0:
             cur.execute(preparedCurrentStock, (current_user.email, ticker))
             result = cur.fetchone()
@@ -45,18 +45,28 @@ def portfolio():
                 return redirect(url_for("portfolio"))
             cur.execute(preparedStock, (current_user.email, ticker, price, quantity))
             conn.commit()
-            new_balance = current_user.balance - transaction_cost
             cur.execute(preparedChangeBalance, (new_balance, current_user.email))
             conn.commit()
-            return redirect(url_for("portfolio"))
         elif transaction_cost > current_user.balance:
             flash("You don't have enough money to buy this")
-            return redirect(url_for("portfolio"))
         else:
             cur.execute(preparedStock, (current_user.email, ticker, price, quantity))
             conn.commit()
-            new_balance = current_user.balance - transaction_cost
             cur.execute(preparedChangeBalance, (new_balance, current_user.email))
             conn.commit()
-            return redirect(url_for("portfolio"))
-    return render_template("portfolio.html", form=form, completed=completed, balance=balance)
+        return redirect(url_for("portfolio"))
+    value, annotated = getPrices(all_transactions)
+    return render_template("portfolio.html", form=form, annotated=annotated, balance=balance, value=value)
+
+def getPrices(all_transactions):
+    annotated = []
+    value = 0
+    for transaction in all_transactions:
+        stock = requests.get(f"https://api.iextrading.com/1.0/stock/{transaction[0]}/book").json()
+        opening = float(stock['quote']['open'])
+        current = float(stock['quote']['latestPrice'])
+        stock_value = current * transaction[1]
+        direction = "Green" if current > opening else "Red"
+        annotated.append((transaction[0], transaction[1], stock_value, direction))
+        value += stock_value
+    return value, annotated
