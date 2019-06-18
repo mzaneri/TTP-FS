@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, flash
 from flask_login import current_user, login_user, login_required, logout_user
 from app import app, login_manager, bcrypt, conn, cur
 from app.forms import RegisterForm, SignInForm
@@ -13,6 +13,11 @@ def user_loader(email):
         return None
     user = User(result)
     return user
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash("You must signin to access the last page you attempted to access")
+    return redirect(url_for("index"))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
