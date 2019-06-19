@@ -27,8 +27,8 @@ def portfolio():
     all_transactions = cur.fetchall()
     balance = current_user.balance
     if form.validate_on_submit():
-        ticker = form.ticker.data.lower()
-        request_url = f"https://api.iextrading.com/1.0/stock/{ticker}/book"
+        ticker = form.ticker.data.upper()
+        request_url = f"https://api.iextrading.com/1.0/stock/{ticker.lower()}/book"
         r = requests.get(request_url)
         if r.status_code != 200:
             flash("That ticker does not exist")

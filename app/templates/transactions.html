@@ -8,7 +8,7 @@
     <div class="box">
         {% for transaction in completed %}
         <div class="field">
-            Ticker : {{transaction[2]}} | Price : {{transaction[3]}} | Quantity : {{transaction[4]}}
+            TYPE {{transaction[2]}} - {{transaction[4]}} Shares @ {{transaction[3]}}
         </div>
         {% endfor %}
     </div>

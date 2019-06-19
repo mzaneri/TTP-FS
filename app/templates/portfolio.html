@@ -19,13 +19,23 @@
         <div class="box">
             {% for member in annotated %}
                 {% if member[3] == 'Red' %}
-                    <div class="field has-text-danger" >
-                        {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}}
+                    <div class="columns has-text-danger">
+                        <div class="column">
+                            {{member[0]}} - {{member[1]}} Shares
+                        </div>
+                        <div class="column">
+                            ${{member[2]}}
+                        </div>
                     </div>
                 {% endif %}
                 {% if member[3] == 'Green' %}
-                    <div class="field has-text-success">
-                        {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}}
+                    <div class="columns has-text-success">
+                        <div class="column">
+                            {{member[0]}} - {{member[1]}} Shares
+                        </div>
+                        <div class="column">
+                            ${{member[2]}}
+                        </div>
                     </div>
                 {% endif %}
             {% endfor %}
