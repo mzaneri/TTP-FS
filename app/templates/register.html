@@ -9,25 +9,22 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <div class="field">
-                <div class="control">
-                    {{ form.name.label }}
+                <div class="control has-text-centered">
                     {{ form.name(size=24) }}
                 </div>
             </div>
             <div class="field">
-                <div class="control">
-                    {{ form.email.label }}
+                <div class="control has-text-centered">
                     {{ form.email(size=24) }}
                 </div>
             </div>
             <div class="field">
-                <div class="control">
-                    {{ form.password.label }}
+                <div class="control has-text-centered">
                     {{ form.password(size=24) }}
                 </div>
             </div>
             <div class="field">
-                <div class="control">
+                <div class="control has-text-centered">
                     {{ form.submit() }}
                 </div>
             </div>

@@ -4,24 +4,22 @@
 
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Signin</h3>
+    <h3 class="title">Sign In</h3>
     <div class="box">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <div class="field">
-                <div class="control">
-                    {{ form.email.label }}
+                <div class="control has-text-centered">
                     {{ form.email(size=24) }}
                 </div>
             </div>
             <div class="field">
-                <div class="control">
-                    {{ form.password.label }}
+                <div class="control has-text-centered">
                     {{ form.password(size=24) }}
                 </div>
             </div>
             <div class="field">
-                <div class="control">
+                <div class="control has-text-centered">
                     {{ form.submit() }}
                 </div>
             </div>

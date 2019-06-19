@@ -3,15 +3,15 @@ from wtforms import StringField, PasswordField, SubmitField, IntegerField
 from wtforms.validators import DataRequired
 
 class RegisterForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Sign Up')
+    name = StringField('Name', validators=[DataRequired()], render_kw={"placeholder": "Name"})
+    email = StringField('Email', validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    submit = SubmitField('Register')
 
 class SignInForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Login')
+    email = StringField('Email', validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Password"})
+    submit = SubmitField('Sign In')
 
 class StockForm(FlaskForm):
     ticker = StringField('Ticker Symbol', validators=[DataRequired()])
