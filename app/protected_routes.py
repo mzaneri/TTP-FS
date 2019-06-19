@@ -35,23 +35,26 @@ def portfolio():
             return redirect(url_for("portfolio"))
         price = r.json()['quote']['latestPrice']
         quantity = int(form.quantity.data)
-        transaction_cost = quantity * price
-        new_balance = current_user.balance - transaction_cost
-        if quantity < 0:
+        if quantity < 1:
+            flash("You can't have a negative quantity")
+            return redirect(url_for("portfolio"))
+        if form.sell.data:
             cur.execute(preparedCurrentStock, (current_user.email, ticker))
             result = cur.fetchone()
-            if result[0] is None or result[0] < (-1 * quantity):
+            if result[0] is None or result[0] < quantity:
                 flash("You can't sell more than you have")
                 return redirect(url_for("portfolio"))
-            cur.execute(preparedStock, (current_user.email, ticker, price, quantity))
+            cur.execute(preparedStock, (current_user.email, ticker, price, -quantity, "SELL"))
             conn.commit()
+            new_balance = current_user.balance + (price * quantity)
             cur.execute(preparedChangeBalance, (new_balance, current_user.email))
             conn.commit()
-        elif transaction_cost > current_user.balance:
+        elif price * quantity > current_user.balance:
             flash("You don't have enough money to buy this")
         else:
-            cur.execute(preparedStock, (current_user.email, ticker, price, quantity))
+            cur.execute(preparedStock, (current_user.email, ticker, price, quantity, "BUY"))
             conn.commit()
+            new_balance = current_user.balance - (price * quantity)
             cur.execute(preparedChangeBalance, (new_balance, current_user.email))
             conn.commit()
         return redirect(url_for("portfolio"))

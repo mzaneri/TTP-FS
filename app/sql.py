@@ -6,6 +6,7 @@ stockTable = """CREATE TABLE IF NOT EXISTS "stock_transactions" (
 	"stock_ticker"	TEXT NOT NULL,
 	"price"	REAL NOT NULL,
 	"quantity"	INTEGER NOT NULL,
+    "type" TEXT NOT NULL,
 	PRIMARY KEY("ID")
 );"""
 
@@ -21,8 +22,8 @@ userTable = """CREATE TABLE IF NOT EXISTS "users" (
 preparedRegister = """INSERT into users (name, email, password, balance)
 VALUES (?, ?, ?, ?)"""
 
-preparedStock = """INSERT into stock_transactions (email, stock_ticker, price, quantity)
-VALUES (?, ?, ?, ?)"""
+preparedStock = """INSERT into stock_transactions (email, stock_ticker, price, quantity, type)
+VALUES (?, ?, ?, ?, ?)"""
 
 preparedCurrentPortfolio = """
 SELECT stock_ticker, sum(quantity)

@@ -5,13 +5,22 @@
 {% block content %}
 <div class="column is-4 is-offset-4">
     <h3 class="title">Transactions</h3>
-    <div class="box">
-        {% for transaction in completed %}
-        <div class="field">
-            TYPE {{transaction[2]}} - {{transaction[4]}} Shares @ {{transaction[3]}}
+    {% if completed %}
+        <div class="box">
+            {% for transaction in completed %}
+                {% if transaction[5] == 'BUY' %}
+                    <div class="field has-text-success">
+                        {{transaction[5]}} {{transaction[2]}} - {{transaction[4]}} Shares @ {{transaction[3]}}
+                    </div>
+                {% endif %}
+                {% if transaction[5] == 'SELL' %}
+                    <div class="field has-text-danger">
+                        {{transaction[5]}} {{transaction[2]}} - {{transaction[4]}} Shares @ {{transaction[3]}}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    {% endif %}
 </div>
 
 {% endblock %}

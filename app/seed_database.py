@@ -11,14 +11,14 @@ conn.commit()
 cur.execute(preparedRegister, ("bill", "google.com", bcrypt.generate_password_hash("there"), 5000))
 conn.commit()
 
-cur.execute(preparedStock, ("youtube.com", "AAPL", 20.3, 2))
+cur.execute(preparedStock, ("youtube.com", "AAPL", 20.3, 2, "BUY"))
 conn.commit()
-cur.execute(preparedStock, ("youtube.com", "AAPL", 20.3, -2))
+cur.execute(preparedStock, ("youtube.com", "AAPL", 20.3, 2, "SELL"))
 conn.commit()
-cur.execute(preparedStock, ("youtube.com", "GOOG", 24.6, 5))
+cur.execute(preparedStock, ("youtube.com", "GOOG", 24.6, 5, "BUY"))
 conn.commit()
 
-cur.execute(preparedStock, ("google.com", "GOOG", 24.6, 5))
+cur.execute(preparedStock, ("google.com", "GOOG", 24.6, 5, "BUY"))
 conn.commit()
 
 # cur.execute(preparedTransactionLog, ("youtube.com", ))

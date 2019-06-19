@@ -16,4 +16,5 @@ class SignInForm(FlaskForm):
 class StockForm(FlaskForm):
     ticker = StringField('Ticker Symbol', validators=[DataRequired()], render_kw={"placeholder": "Ticker Symbol"})
     quantity = IntegerField('Quantity', validators=[DataRequired()], render_kw={"placeholder": "Quantity"})
-    submit = SubmitField('Submit Transaction')
+    buy = SubmitField('Buy Stock')
+    sell = SubmitField('Sell Stock')
