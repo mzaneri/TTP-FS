@@ -15,13 +15,22 @@
         </div>
     </div>
 
-    <div class="box">
-        {% for member in annotated %}
-        <div class="field">
-            Ticker : {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}} | Direction : {{member[3]}}
+    {% if annotated %}
+        <div class="box">
+            {% for member in annotated %}
+                {% if member[3] == 'Red' %}
+                    <div class="field has-text-danger" >
+                        {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}}
+                    </div>
+                {% endif %}
+                {% if member[3] == 'Green' %}
+                    <div class="field has-text-success">
+                        {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}}
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
+    {% endif %}
 
     <div class="box">
         <form action="" method="post">
