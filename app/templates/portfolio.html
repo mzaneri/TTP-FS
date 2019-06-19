@@ -5,29 +5,40 @@
 {% block content %}
 
 
-    <div><p> Cash Balance : {{balance}} </p></div>
-    <div><p> Portfolio Value : {{value}} </p></div>
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Portfolio</h3>
 
-    {% for member in annotated %}
-    <div><p> Ticker : {{member[0]}} </p></div>
-    <div><p> Quantity : {{member[1]}} </p></div>
-    <div><p> Value : {{member[2]}} </p></div>
-    <div><p> Direction : {{member[3]}} </p></div>
-    {% endfor %}
+    <div class="box">
+        <div class="columns">
+            <div class="column"> Cash Balance : ${{balance}} </div>
+            <div class="column"> Stock Value : ${{value}} </div>
+        </div>
+    </div>
 
+    <div class="box">
+        {% for member in annotated %}
+        <div class="field">
+            Ticker : {{member[0]}} | Quantity : {{member[1]}} | Value : {{member[2]}} | Direction : {{member[3]}}
+        </div>
+        {% endfor %}
+    </div>
 
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.ticker.label }}
-            {{ form.ticker(size=8) }}
-        <p>
-        <p>
-            {{ form.quantity.label }}
-            {{ form.quantity(size=8) }}
-        <p>
-        <p>
-            {{ form.submit() }}
-        </p>
-    </form>
+    <div class="box">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <div class="field">
+                <div class="control has-text-centered">
+                {{ form.ticker(size=24) }}
+                </div>
+            </div
+            <div class="field">
+                <div class="control has-text-centered">
+                {{ form.quantity(size=24) }}
+            </div
+            <div class="field">
+                <div class="control has-text-centered">
+                {{ form.submit() }}
+            </div>
+        </form>
+    </div>
 {% endblock %}

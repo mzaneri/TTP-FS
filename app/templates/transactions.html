@@ -3,12 +3,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h>Transactions</h>
-
-<p>
-    {% for transaction in completed %}
-    <div> Ticker : {{transaction[2]}} | Price : {{transaction[3]}} | Quantity : {{transaction[4]}} </div>
-    {% endfor %}
-</p>
+<div class="column is-4 is-offset-4">
+    <h3 class="title">Transactions</h3>
+    <div class="box">
+        {% for transaction in completed %}
+        <div class="field">
+            Ticker : {{transaction[2]}} | Price : {{transaction[3]}} | Quantity : {{transaction[4]}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock %}
