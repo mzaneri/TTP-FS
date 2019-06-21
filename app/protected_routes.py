@@ -70,6 +70,14 @@ def getPrices(all_transactions):
         current = float(stock['quote']['latestPrice'])
         stock_value = current * transaction[1]
         direction = "Green" if current > opening else "Red"
-        annotated.append((transaction[0], transaction[1], stock_value, direction))
+        annotated.append((transaction[0], transaction[1], truncateFloat(stock_value), direction))
         value += stock_value
-    return value, annotated
+    return truncateFloat(value), annotated
+
+def truncateFloat(number):
+    precision = 2
+    string = str(number)
+    decimal = string.find('.')
+    position = decimal + precision + 1
+    rounded = string[:position]
+    return rounded

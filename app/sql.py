@@ -23,7 +23,7 @@ preparedRegister = """INSERT into users (name, email, password, balance)
 VALUES (?, ?, ?, ?)"""
 
 preparedStock = """INSERT into stock_transactions (email, stock_ticker, price, quantity, type)
-VALUES (?, ?, ?, ?, ?)"""
+VALUES (?, ?, round(?, 2), ?, ?)"""
 
 preparedCurrentPortfolio = """
 SELECT stock_ticker, sum(quantity)
@@ -44,7 +44,7 @@ preparedTransactionLog = "SELECT * from stock_transactions WHERE email=?"
 
 preparedUserInfo = "SELECT * FROM users WHERE email=?"
 
-preparedChangeBalance = "UPDATE users SET balance=? WHERE email=?"
+preparedChangeBalance = "UPDATE users SET balance=round(?, 2) WHERE email=?"
 
 cur.execute(stockTable)
 cur.execute(userTable)
