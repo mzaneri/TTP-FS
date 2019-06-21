@@ -17,7 +17,18 @@ def secure():
 def transactions():
     cur.execute(preparedTransactionLog, (current_user.email,))
     completed = cur.fetchall()
+    completed = displayWrapper(completed)
     return render_template("transactions.html", completed=completed)
+
+def displayWrapper(completed):
+    wrapped = []
+    for line in completed:
+        if line[4] < 0:
+            new = (line[0], line[1], line[2], line[3], -line[4], line[5])
+        else:
+            new = line
+        wrapped.append(new)
+    return wrapped
 
 @app.route('/portfolio', methods=['GET', 'POST'])
 @login_required
