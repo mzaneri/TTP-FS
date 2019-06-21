@@ -1,6 +1,7 @@
 import sqlite3
 from flask_login import UserMixin
 
+# Custom created class for user_loader callback
 class User(UserMixin):
     def __init__(self, result):
         self.name = result[1]
