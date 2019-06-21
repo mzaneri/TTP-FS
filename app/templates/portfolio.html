@@ -38,6 +38,16 @@
                         </div>
                     </div>
                 {% endif %}
+                {% if member[3] == 'Gray' %}
+                    <div class="columns has-text-grey">
+                        <div class="column">
+                            {{member[0]}} - {{member[1]}} Shares
+                        </div>
+                        <div class="column">
+                            ${{member[2]}}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     {% endif %}

@@ -100,7 +100,10 @@ def getPrices(all_transactions):
         opening = float(stock['quote']['open'])
         current = float(stock['quote']['latestPrice'])
         stock_value = current * transaction[1]
-        direction = "Green" if current > opening else "Red"
+        if current == opening:
+            direction = "Gray"
+        else:
+            direction = "Green" if current > opening else "Red"
         annotated.append((transaction[0], transaction[1], truncateFloat(stock_value), direction))
         value += stock_value
     return truncateFloat(value), annotated
