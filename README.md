@@ -20,7 +20,6 @@ Open browser to `http://127.0.0.1:5000`
 ## TODOs
 - [ ] Add check to make sure user enters valid email address
 - [ ] Make buys and sells atomic. Currently the tx and update of user balance are separate transactions.
-- [ ] Split up portfolio functions in seperate smaller functions
 - [ ] Redirect invalid routes
 - [ ] Change secret key to be initialize from enviornmental variable
 - [ ] Enforce PEP8 syntax

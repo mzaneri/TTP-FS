@@ -59,22 +59,18 @@ def portfolio():
             return redirect(url_for("portfolio"))
         # If the user clicks the 'sell' button
         if form.sell.data:
-            # Queries the db to get the quantity the user owns of the stock
-            cur.execute(preparedCurrentStock, (current_user.email, ticker))
-            result = cur.fetchone()
-            # If the user doesn't have any of the stock or is trying to sell more than they own
-            if result[0] is None or result[0] < quantity:
-                flash("You can't sell more than you have")
-                return redirect(url_for("portfolio"))
-            # Records the sale in transaction log
-            cur.execute(preparedStock, (current_user.email, ticker, price, -quantity, "SELL"))
-            conn.commit()
-            # Adjust the user balance to reflect the sale
-            new_balance = current_user.balance + (price * quantity)
-            cur.execute(preparedChangeBalance, (new_balance, current_user.email))
-            conn.commit()
+            sellStock(ticker, quantity, price)
+        # If the user clicks the 'buy' button
+        else:
+            buyStock(ticker, quantity, price)
+        return redirect(url_for("portfolio"))
+    # If get request annotate the users portfolio for pricing information and send all information and portfolio to be rendered and sent to client
+    value, annotated = getPrices(all_transactions)
+    return render_template("portfolio.html", form=form, annotated=annotated, balance=balance, value=value)
+
+def buyStock(ticker, quantity, price):
         # If the user is trying to buy with a transaction size higher than their balance
-        elif price * quantity > current_user.balance:
+        if price * quantity > current_user.balance:
             flash("You don't have enough money to buy this")
         # If the user has enough money to make a purchase
         else:
@@ -85,10 +81,22 @@ def portfolio():
             new_balance = current_user.balance - (price * quantity)
             cur.execute(preparedChangeBalance, (new_balance, current_user.email))
             conn.commit()
-        return redirect(url_for("portfolio"))
-    # If get request annotate the users portfolio for pricing information and send all information and portfolio to be rendered and sent to client
-    value, annotated = getPrices(all_transactions)
-    return render_template("portfolio.html", form=form, annotated=annotated, balance=balance, value=value)
+
+def sellStock(ticker, quantity, price):
+        # Queries the db to get the quantity the user owns of the stock
+        cur.execute(preparedCurrentStock, (current_user.email, ticker))
+        result = cur.fetchone()
+        # If the user doesn't have any of the stock or is trying to sell more than they own
+        if result[0] is None or result[0] < quantity:
+            flash("You can't sell more than you have")
+            return redirect(url_for("portfolio"))
+        # Records the sale in transaction log
+        cur.execute(preparedStock, (current_user.email, ticker, price, -quantity, "SELL"))
+        conn.commit()
+        # Adjust the user balance to reflect the sale
+        new_balance = current_user.balance + (price * quantity)
+        cur.execute(preparedChangeBalance, (new_balance, current_user.email))
+        conn.commit()
 
 # Takes each stock, find the current price in realtion to opening price, annotated transaction
 def getPrices(all_transactions):
